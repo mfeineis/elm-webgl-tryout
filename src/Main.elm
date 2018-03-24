@@ -41,7 +41,7 @@ main =
         { init = init
         , subscriptions = subscriptions
         , update = update
-        , view = Render.view
+        , view = view
         }
 
 
@@ -120,6 +120,10 @@ animate elapsed model =
             | elapsed = newElapsed
         }
 
+
+view : Model -> Html Msg
+view =
+    Render.view
 
 
 -- Helpers
