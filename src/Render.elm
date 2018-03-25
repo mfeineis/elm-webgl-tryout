@@ -83,30 +83,33 @@ vertexShader =
     [glsl|
 
     attribute vec2 position;
-    uniform vec2 screenSize;
     varying vec2 texturePos;
 
     void main() {
-        vec2 offset = vec2(0); //vec2(0.5);
-        gl_Position = vec4(position - offset, 0, 1);
+        vec2 offset = vec2(-1.0); //vec2(0.5);
+        //vec2 offset = vec2(0.0);
+        gl_Position = vec4(position + offset, 0, 1);
         texturePos = position;
     }
 
     |]
 
 
-fragmentShader : WebGL.Shader {} Uniform Varying
+fragmentShader : WebGL.Shader {} { u | background : WebGL.Texture, screenSize : Vec2, textureSize : Vec2 } Varying
 fragmentShader =
     [glsl|
 
     precision mediump float;
 
     uniform sampler2D background;
+    uniform vec2 screenSize;
+    uniform vec2 textureSize;
+
     varying vec2 texturePos;
 
     void main() {
         //vec2 p = texturePos / 2.0 - 1.0;
-        vec2 p = texturePos;
+        vec2 p = vec2(texturePos / 2.0);
         gl_FragColor = texture2D(background, p);
     }
 
