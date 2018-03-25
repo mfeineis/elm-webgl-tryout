@@ -50,12 +50,12 @@ mesh : Mesh Vertex
 mesh =
     WebGL.triangles
         [ ( Vertex (vec2 0 0)
-          , Vertex (vec2 64 128)
-          , Vertex (vec2 64 0)
+          , Vertex (vec2 2 2)
+          , Vertex (vec2 2 0)
           )
         , ( Vertex (vec2 0 0)
-          , Vertex (vec2 0 128)
-          , Vertex (vec2 64 128)
+          , Vertex (vec2 0 2)
+          , Vertex (vec2 2 2)
           )
         ]
 
@@ -95,22 +95,21 @@ vertexShader =
     |]
 
 
-fragmentShader : WebGL.Shader {} { u | background : WebGL.Texture, screenSize : Vec2, textureSize : Vec2 } Varying
+fragmentShader : WebGL.Shader {} Uniform Varying
 fragmentShader =
     [glsl|
 
     precision mediump float;
 
     uniform sampler2D background;
-    uniform vec2 screenSize;
-    uniform vec2 textureSize;
 
     varying vec2 texturePos;
 
     void main() {
-        //vec2 p = texturePos / 2.0 - 1.0;
-        vec2 p = vec2(texturePos / 2.0);
-        gl_FragColor = texture2D(background, p);
+        //vec2 p = vec2(texturePos / 2.0);
+        //gl_FragColor = texture2D(background, p);
+
+        gl_FragColor = vec4(texturePos / 2.0, 0.0, 1.0);
     }
 
     |]
